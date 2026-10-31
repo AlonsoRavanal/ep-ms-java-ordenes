@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 @Entity
 @Table(name = "ordenes")
 public class Orden {
@@ -20,12 +23,18 @@ public class Orden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "El ID del comprador es obligatorio")
+    @Positive(message = "El ID del comprador debe ser mayor que cero")
     @Column(nullable = false)
     private Long compradorId;
 
+    @NotNull(message = "El ID del evento es obligatorio")
+    @Positive(message = "El ID del evento debe ser mayor que cero")
     @Column(nullable = false)
     private Long eventoId;
 
+    @NotNull(message = "La cantidad es obligatoria")
+    @Positive(message = "La cantidad debe ser mayor que cero")
     @Column(nullable = false)
     private Integer cantidad;
 
@@ -59,6 +68,10 @@ public class Orden {
         this.cantidad = cantidad;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Long getCompradorId() {
